@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 
 
+
   
 
 
@@ -43,29 +44,34 @@ export class News extends Component {
         }
         document.title=`${this.capitalizeFirstLetter(this.props.category)} - NewsApp`;
     }
-        // async updateNews(){
+        async updateNews(){
 
-            // let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1b4b1ab30eee4e14b4ccfabc8c5ad962&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+            this.props.setProgress(20);
+
+            let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+            this.setState({loading:true});
+            let data = await fetch(url);
+            this.props.setProgress(50);
+            let parsedData = await data.json();
+            this.props.setProgress(70);
+            console.log(parsedData);
+            this.setState({articles: parsedData.articles, totalResults: parsedData.totalResults, loading:false})
+            this.props.setProgress(100);
+        }
+        
+
+        async componentDidMount(){
+
+            // let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1b4b1ab30eee4e14b4ccfabc8c5ad962&page=1&pageSize=${this.props.pageSize}`;
             // this.setState({loading:true});
             // let data = await fetch(url);
             // let parsedData = await data.json();
             // console.log(parsedData);
             // this.setState({articles: parsedData.articles, totalResults: parsedData.totalResults, loading:false})
-        // }
-        
-
-        async componentDidMount(){
-
-            let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1b4b1ab30eee4e14b4ccfabc8c5ad962&page=1&pageSize=${this.props.pageSize}`;
-            this.setState({loading:true});
-            let data = await fetch(url);
-            let parsedData = await data.json();
-            console.log(parsedData);
-            this.setState({articles: parsedData.articles, totalResults: parsedData.totalResults, loading:false})
 
             // or below when we use updateNews function
 
-            // this.updateNews();
+            this.updateNews();
         }
 
     // handlePrevClick=async()=>{
@@ -116,7 +122,7 @@ export class News extends Component {
     fetchMoreData = async() => {
         
         this.setState({page:this.state.page+1});
-        const url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=1b4b1ab30eee4e14b4ccfabc8c5ad962&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+        const url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}=${this.state.page}&pageSize=${this.props.pageSize}`;
         
         let data = await fetch(url);
         let parsedData = await data.json();
