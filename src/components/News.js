@@ -122,7 +122,7 @@ export class News extends Component {
     fetchMoreData = async() => {
         
         this.setState({page:this.state.page+1});
-        const url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}=${this.state.page}&pageSize=${this.props.pageSize}`;
+        const url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
         
         let data = await fetch(url);
         let parsedData = await data.json();
@@ -157,7 +157,7 @@ export class News extends Component {
                 {/*!this.state.loading&&*/this.state.articles.map((element)=>{
 
                    return <div className="col-md-4" key={element.url}>
-                <NewsItem   title={element.title?element.title:""} description={element.description?element.description:""} imageUrl={element.urlToImage} newsUrl={element.url} author={!element.author?"Unknown":element.author} date={element.publishedAt} source={element.source.name}/>
+                <NewsItem title={element.title?element.title:""} description={element.description?element.description:""} imageUrl={element.urlToImage} newsUrl={element.url} author={!element.author?"Unknown":element.author} date={element.publishedAt} source={element.source.name} />
                    </div>
 
                 }) }
