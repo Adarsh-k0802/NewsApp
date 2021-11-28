@@ -35,7 +35,8 @@ export class News extends Component {
 
             articles:[],
             loading: false,
-            page:1
+            page:1,
+            totalResults: 0
 
         }
         document.title=`${this.capitalizeFirstLetter(this.props.category)} - NewsApp`;
@@ -114,13 +115,20 @@ export class News extends Component {
             <div className="container my-3">
                 <h1 className="text-center">NewsApp- {this.capitalizeFirstLetter(this.props.category)} News</h1>
 
-               { this.state.loading && <Spinner />}
+               {/* { this.state.loading && <Spinner />} */}
                
                
+
+               <InfiniteScroll
+          dataLength={this.state.articles.length}
+          next={this.fetchMoreData}
+          hasMore={this.state.articles.length!==this.totalResults}
+          loader={<h4>Loading...</h4>}
+        >
 
                 <div className="row my-3">
 
-                {!this.state.loading&&this.state.articles.map((element)=>{
+                {/*!this.state.loading&&*/this.state.articles.map((element)=>{
 
                    return <div className="col-md-4" key={element.url}>
                 <NewsItem   title={element.title?element.title:""} description={element.description?element.description:""} imageUrl={element.urlToImage} newsUrl={element.url} author={!element.author?"Unknown":element.author} date={element.publishedAt} source={element.source.name}/>
@@ -133,6 +141,7 @@ export class News extends Component {
                  
                  
                  </div>
+                 </InfiniteScroll>
 
                   <div className="container d-flex justify-content-between">
                       
