@@ -1,5 +1,5 @@
 <b>*NewsApp*</b><br>
-This website is developed using React and Bootstrap v5.
+This website is developed using React and Bootstrap v5. The NEWS API used in this website, only works in the localhost of the developers and <b>can not be hosted online</b>.
 
 <b>*Reason behind this Website*</b><br>
 
